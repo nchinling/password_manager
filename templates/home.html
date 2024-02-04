@@ -8,10 +8,17 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <a href="/">Home</a>
+        <a href="/create_password">Create encrypted password</a>
     </div>
     <h1>Encryption and Decryption with OpenSSL</h1>
     
+    <h2>List of Apps:</h2>
+    <ul>
+        {% for app_name in app_names %}
+            <li><a href="{{ url_for('app_page', app_name=app_name) }}">{{ app_name }}</a></li>
+        {% endfor %}
+    </ul>
+   
 </body>
 </html>

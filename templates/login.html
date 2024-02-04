@@ -11,7 +11,14 @@
         <a href="/login">Login</a>
         <a href="/register">Register</a>
     </div>
-    <h1>Encryption and Decryption with OpenSSL</h1>
+    <h1>Login</h1>
+    <form method="POST">
+        <label for="app">Email:</label><br>
+        <input type="text" id="email" name="email" value="{{ email }}" required><br>
+        <label for="username">Password:</label><br>
+        <input type="password" id="password" name="password" value="" required><br><br>
+        <input type="submit" value="Login"> 
+    </form>
     
 </body>
 </html>
