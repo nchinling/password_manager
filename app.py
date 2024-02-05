@@ -96,6 +96,7 @@ def home():
 @app.route('/app/<app_name>', methods=['GET', 'POST'])
 def app_page(app_name):
     global key
+    success_message = request.args.get('success_message')
     if request.method == 'POST':
         key = request.form['key']
         
@@ -113,7 +114,7 @@ def app_page(app_name):
         else:
             return render_template('app_page.html', app_name=app_name, error_message="Password not found for the given app and key")
     
-    return render_template('app_page.html', app_name=app_name)
+    return render_template('app_page.html', app_name=app_name, success_message=success_message)
 
 
 @app.route('/create_password', methods=['GET', 'POST'])
@@ -149,7 +150,7 @@ def edit_app(app_name):
     global key
     edited_username = request.form['edited_username']
     edited_password = request.form['edited_password']
-    user_id = session.get('user_id')
+    # user_id = session.get('user_id')
 
     existing_password_object = Password.query.filter_by(app_name=app_name).first()
 
@@ -163,11 +164,12 @@ def edit_app(app_name):
         db.session.commit()
 
         success_message = "Saved successfully"
+        key = ""
     else:
         success_message = "Password entry not found"
     
-    return render_template('app_page.html', app_name=app_name, success_message=success_message)
-
+    # return render_template('app_page.html', app_name=app_name, success_message=success_message)
+    return redirect(url_for('app_page', app_name=app_name, success_message=success_message ))
 
 # delete app 
 @app.route('/delete_app/<app_name>', methods=['POST'])
