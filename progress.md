@@ -1,3 +1,4 @@
 ## 5 Feb
-- work on user session when creating app
-
+- worked on user session when creating app
+- implemented login/logout
+- implemented delete

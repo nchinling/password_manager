@@ -16,9 +16,12 @@
         <label for="app">Email:</label><br>
         <input type="text" id="email" name="email" value="{{ email }}" required><br>
         <label for="username">Password:</label><br>
-        <input type="password" id="password" name="password" value="" required><br><br>
+        <input type="password" id="password" name="password" value="{{password}}" required><br><br>
         <input type="submit" value="Login"> 
     </form>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
     
 </body>
 </html>
