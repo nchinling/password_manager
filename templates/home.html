@@ -13,7 +13,9 @@
         <a href="/logout">Log out</a>
     </div>
     <h1>Encryption and Decryption with OpenSSL</h1>
-    
+    <h2>Welcome {{username}}</h2>
+
+    {% if app_names %}
     <h2>List of Apps:</h2>
     <ul>
         {% for app_name in app_names %}
@@ -22,6 +24,8 @@
             </li>
         {% endfor %}
     </ul>
-   
+    {% else %}
+    <h2>Store your first app account details</h2>
+    {% endif %}
 </body>
 </html>

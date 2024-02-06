@@ -63,8 +63,14 @@ def register():
         name = request.form['name']
         username = request.form['username']
         email = request.form['email']
-        account_password = request.form['password']
-        
+        password = request.form['password']
+        reentered_password = request.form['reentered_password']
+
+        if password != reentered_password:
+            password_mismatch_message = 'Passwords do not match!'
+            return render_template('register.html', password_mismatch_message=password_mismatch_message,
+                                    name=name, username=username, email=email, password=password, reentered_password=reentered_password)
+    
         # Check if email already exists in the database
         existing_user = User.query.filter((User.email == email)).first()
         if existing_user:
@@ -72,7 +78,7 @@ def register():
             return render_template('register.html', error=error_message)
         
         # Create a new user
-        new_user = User(name=name, username=username, email=email, account_password=account_password)
+        new_user = User(name=name, username=username, email=email, account_password=password)
         db.session.add(new_user)
         db.session.commit()
         
@@ -87,11 +93,16 @@ def index():
 
 @app.route('/home', methods=['GET'])
 def home():
+    user_id = session.get('user_id')
+    if user_id:
+        user = User.query.filter_by(id=user_id).first()
+        username = user.username
+    # Fetch all app names belonging to the user from the database
+        app_names = [password.app_name for password in Password.query.filter_by(user_id=user_id).distinct(Password.app_name)]
+    else:
+        app_names = []
     
-    # Fetch all app names from the database
-    app_names = [password.app_name for password in Password.query.distinct(Password.app_name)]
-    
-    return render_template('home.html', app_names=app_names)
+    return render_template('home.html', app_names=app_names, username=username)
 
 @app.route('/app/<app_name>', methods=['GET', 'POST'])
 def app_page(app_name):
